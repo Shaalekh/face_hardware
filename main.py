@@ -9,9 +9,9 @@ def main() -> None:
 
     try:
         while True:
-            controller.set_target_angles({0: 100, 1: 50})
+            controller.set_target_angles({0: 85, 1: 125})
             time.sleep(0.5)
-            controller.set_target_angles({0: 90, 1: 90})
+            controller.set_target_angles({0: 115, 1: 95})
             time.sleep(0.5)
     except KeyboardInterrupt:
         print("Stopping SafeFaceController...")

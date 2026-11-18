@@ -23,6 +23,22 @@ python3 -m pip install -e .
 python3 main.py
 ```
 
+## Run the PyQt joint mover
+
+```bash
+python3 -m safe_face_controller.joint_mover
+```
+
+For a desktop/test run without Raspberry Pi hardware, use mock mode:
+
+```bash
+python3 -m safe_face_controller.joint_mover --mock
+```
+
+Every channel listed in `DEFAULT_LIMITS` or `DEFAULT_NEUTRAL_ANGLES` appears as
+a joint with a 0-180 degree slider. A channel with no neutral angle defaults to
+90 degrees. Per-channel safety limits from `config.py` are still applied.
+
 ## Wiring notes
 
 - Use a dedicated 5V power supply for the servos

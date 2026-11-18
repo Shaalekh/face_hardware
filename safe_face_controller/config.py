@@ -1,6 +1,6 @@
 DEFAULT_LIMITS = {
-    0: (30, 110),
-    1: (45, 135),
+    0: (80, 110),
+    1: (80, 110),
 }
 
 DEFAULT_NEUTRAL_ANGLES = {

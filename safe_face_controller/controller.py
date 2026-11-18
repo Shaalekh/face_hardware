@@ -27,7 +27,7 @@ class SafeFaceController:
         self.update_interval = float(update_interval)
         self.watchdog_timeout = float(watchdog_timeout)
 
-        self.driver = driver or ServoDriver(use_mock=driver is None)
+        self.driver = driver or ServoDriver()
 
         self.current_angles = {channel: float(angle) for channel, angle in self.neutral_angles.items()}
         self.target_angles = {channel: float(angle) for channel, angle in self.current_angles.items()}

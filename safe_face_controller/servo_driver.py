@@ -13,10 +13,16 @@ class ServoDriver:
 
     def __init__(self, channels: int = 16, *, use_mock: bool = False):
         self.channels = channels
-        self.use_mock = use_mock or ServoKit is None
+        self.use_mock = use_mock
         self._angles: Dict[int, float] = {}
 
         if not self.use_mock:
+            if ServoKit is None:
+                raise RuntimeError(
+                    "ServoKit hardware support is unavailable. Install "
+                    "adafruit-circuitpython-servokit and run on a Raspberry Pi "
+                    "with I2C enabled."
+                )
             self.kit = ServoKit(channels=self.channels)
 
     def set_angle(self, channel: int, angle: float) -> None:

@@ -2,6 +2,7 @@ import time
 
 from safe_face_controller import SafeFaceController
 from safe_face_controller.servo_driver import ServoDriver
+import safe_face_controller.servo_driver as servo_driver_module
 
 
 class MockDriver(ServoDriver):
@@ -43,3 +44,19 @@ def test_controller_starts_and_stops_cleanly():
 
     assert controller._thread is not None
     assert not controller._thread.is_alive()
+
+
+def test_controller_uses_hardware_driver_when_available(monkeypatch):
+    class FakeServo:
+        angle = None
+
+    class FakeServoKit:
+        def __init__(self, channels):
+            self.servo = [FakeServo() for _ in range(channels)]
+
+    monkeypatch.setattr(servo_driver_module, "ServoKit", FakeServoKit)
+
+    controller = SafeFaceController()
+
+    assert not controller.driver.use_mock
+    assert controller.driver.kit.servo[0].angle == 90

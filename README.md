@@ -10,29 +10,51 @@ A Raspberry Pi 5 project for safely controlling face servos with a continuously 
 - Watchdog fallback to a safe neutral pose
 - Small hardware abstraction for `ServoKit`
 
-## Installation
+## Setup
+
+From the project directory, create a virtual environment with access to system packages for PyQt5:
 
 ```bash
-cd /home/shaalekh/Documents/face_hardware
-python3 -m pip install -e .
+cd /home/shaalekh/face_hardware
+/usr/bin/python3 -m venv --system-site-packages .env
+source .env/bin/activate
+python -m pip install -e . pytest
+```
+
+On Debian/Raspberry Pi OS, install PyQt5 before creating the environment if it is not already available:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y python3-pyqt5 python3-dev libgpiod-dev
+python -m pip install 'Adafruit-Blinka-Raspberry-Pi-PWM>=1.0.2' Adafruit-Blinka-Raspberry-Pi5-Neopixel
 ```
 
 ## Run the demo
 
+Hardware mode requires a Raspberry Pi with I2C enabled and a compatible PCA9685 servo board:
+
 ```bash
-python3 main.py
+python main.py
 ```
 
 ## Run the PyQt joint mover
 
+Hardware mode:
+
 ```bash
-python3 -m safe_face_controller.joint_mover
+python -m safe_face_controller.joint_mover
 ```
 
-For a desktop/test run without Raspberry Pi hardware, use mock mode:
+For a desktop or test run without Raspberry Pi hardware, use mock mode:
 
 ```bash
-python3 -m safe_face_controller.joint_mover --mock
+python -m safe_face_controller.joint_mover --mock
+```
+
+## Run tests
+
+```bash
+python -m pytest -q
 ```
 
 Every channel listed in `DEFAULT_LIMITS` or `DEFAULT_NEUTRAL_ANGLES` appears as

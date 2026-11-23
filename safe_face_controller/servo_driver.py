@@ -2,10 +2,7 @@ from __future__ import annotations
 
 from typing import Dict, Optional
 
-try:
-    from adafruit_servokit import ServoKit
-except ImportError:  # pragma: no cover - used in tests and non-hardware environments
-    ServoKit = None
+ServoKit = None
 
 
 class ServoDriver:
@@ -17,6 +14,17 @@ class ServoDriver:
         self._angles: Dict[int, float] = {}
 
         if not self.use_mock:
+            global ServoKit
+            if ServoKit is None:
+                try:
+                    from adafruit_servokit import ServoKit as HardwareServoKit
+                except ImportError as exc:
+                    raise RuntimeError(
+                        "ServoKit hardware support is unavailable. Install "
+                        "adafruit-circuitpython-servokit and run on a Raspberry Pi "
+                        "with I2C enabled."
+                    ) from exc
+                ServoKit = HardwareServoKit
             if ServoKit is None:
                 raise RuntimeError(
                     "ServoKit hardware support is unavailable. Install "

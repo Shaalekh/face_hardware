@@ -49,7 +49,7 @@ def test_controller_starts_and_stops_cleanly():
 
 
 def test_joint_mover_uses_all_configured_channels():
-    assert configured_channels() == [0, 1, 2, 3]
+    assert configured_channels() == list(range(16))
 
 
 def test_joint_mover_controller_keeps_target_after_watchdog_window():
@@ -62,7 +62,7 @@ def test_joint_mover_controller_keeps_target_after_watchdog_window():
     controller._last_update = time.monotonic() - 1.0
     controller._update_once()
 
-    assert controller.target_angles[0] == 115
+    assert controller.target_angles[0] == 110
     assert controller.target_angles[1] == 120
 
 

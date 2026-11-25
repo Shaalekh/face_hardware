@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+import os
 import argparse
 import sys
 from typing import Iterable
@@ -21,6 +21,7 @@ from .config import DEFAULT_LIMITS, DEFAULT_NEUTRAL_ANGLES
 from .controller import SafeFaceController
 from .servo_driver import ServoDriver
 
+os.environ["BLINKA_SKIP_DEPENDENCY_CHECK"] = "1"
 
 def configured_channels() -> list[int]:
     channels = set(DEFAULT_LIMITS)

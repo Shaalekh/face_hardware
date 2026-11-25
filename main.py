@@ -1,18 +1,29 @@
+import os
 import time
+
+os.environ["BLINKA_SKIP_DEPENDENCY_CHECK"] = "1"
 
 from safe_face_controller import SafeFaceController
 
 
 def main() -> None:
-    controller = SafeFaceController()
+    controller = SafeFaceController(watchdog_timeout=float("inf"))
     controller.start()
 
     try:
         while True:
-            controller.set_target_angles({0: 85, 1: 125})
-            time.sleep(0.5)
-            controller.set_target_angles({0: 115, 1: 95})
-            time.sleep(0.5)
+            # open eyes
+            controller.set_target_angles({4: 80, 5: 100, 8: 120, 9: 70})
+            time.sleep(3.0)
+            # close eyes
+            controller.set_target_angles({4: 110, 5: 70, 8: 85, 9: 100})
+            time.sleep(0.1)
+            # open eyes
+            controller.set_target_angles({4: 80, 5: 100, 8: 120, 9: 70})
+            time.sleep(0.1)
+            # close eyes
+            controller.set_target_angles({4: 110, 5: 70, 8: 85, 9: 100})
+            time.sleep(0.1)
     except KeyboardInterrupt:
         print("Stopping SafeFaceController...")
     finally:

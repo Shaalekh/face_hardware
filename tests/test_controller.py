@@ -24,6 +24,15 @@ def test_safe_target_angles_are_clamped():
     assert controller.target_angles[1] == 45
 
 
+def test_default_step_size_moves_faster_toward_target():
+    controller = SafeFaceController(driver=MockDriver())
+    controller.set_target_angle(0, 110)
+
+    controller._update_once()
+
+    assert controller.current_angles[0] == 105
+
+
 def test_watchdog_returns_to_neutral():
     driver = MockDriver()
     controller = SafeFaceController(driver=driver)

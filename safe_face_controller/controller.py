@@ -16,7 +16,7 @@ class SafeFaceController:
         limits: Optional[Mapping[int, tuple[float, float]]] = None,
         neutral_angles: Optional[Mapping[int, float]] = None,
         *,
-        step_size: float = 2.0,
+        step_size: float = 20.0,
         update_interval: float = 0.02,
         watchdog_timeout: float = 0.5,
         driver: Optional[ServoDriver] = None,
